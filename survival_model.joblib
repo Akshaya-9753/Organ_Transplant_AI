@@ -1,0 +1,62 @@
+import os
+import pandas as pd
+from joblib import load
+from sklearn.ensemble import RandomForestClassifier  # needed for joblib
+
+# -------------------------------
+# Path to your saved model
+# -------------------------------
+MODEL_PATH = os.path.join(
+    "C:/Users/user/OneDrive/Desktop/Organ_Transplant_AI/ml", 
+    "survival_model.joblib"
+)
+
+# -------------------------------
+# Load the model safely
+# -------------------------------
+try:
+    actual_model = load(MODEL_PATH)
+except FileNotFoundError:
+    raise FileNotFoundError(f"Model file not found at {MODEL_PATH}. Make sure you saved the model as survival_model.joblib in the ml/ folder.")
+except Exception as e:
+    raise RuntimeError(f"Error loading model: {e}")
+
+# -------------------------------
+# Prediction function
+# -------------------------------
+def predict_survival(features: dict) -> float:
+    """
+    Predict 1-year survival probability given patient features.
+
+    Args:
+        features (dict): keys must match the model's training features
+
+    Returns:
+        float: survival probability in percentage (0-100)
+    """
+    # Convert dict to a single-row DataFrame
+    X = pd.DataFrame([features])
+
+    # Predict probability for the positive class (survival)
+    prob = actual_model.predict_proba(X)[0][1]
+
+    # Convert to percentage
+    return round(prob * 100, 2)
+
+# -------------------------------
+# Optional test
+# -------------------------------
+if __name__ == "__main__":
+    test_features = {
+        "age": 45,
+        "organ": "kidney",
+        "severity": 3,
+        "icu": 0,
+        "infection": 0,
+        "sepsis": 0,
+        "hla": 5,
+        "pra": 10,
+        "prev_tx": 0,
+        "cancer": 0
+    }
+    print("Predicted 1-year survival:", predict_survival(test_features), "%")
