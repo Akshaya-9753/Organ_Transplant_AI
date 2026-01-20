@@ -1,4 +1,4 @@
-#  Organ Transplant Decision Support System
+# 🩻 Organ Transplant Decision Support System
 
 An AI-assisted, explainable clinical decision support system designed to help transplant physicians evaluate patient eligibility, urgency, and risk for solid organ transplantation.
 
@@ -125,7 +125,7 @@ Organ_Transplant_AI/
 
 ## 🚀 How to Run the Project
 
-### 1️⃣ Install dependencies
+ 1️⃣ Install dependencies
 ```bash
 pip install -r requirements.txt
 
@@ -184,3 +184,4 @@ EHR integration (FHIR)
 👩‍⚕️👨‍⚕️ Final Note
 
 This project demonstrates how AI can assist—but not replace—clinical expertise, especially in high-stakes medical decisions like organ transplantation.
+
